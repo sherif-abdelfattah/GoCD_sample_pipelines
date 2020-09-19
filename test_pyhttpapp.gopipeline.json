@@ -1,0 +1,232 @@
+{
+  "group": "Pyhttpserv",
+  "name": "test_pyhttpapp",
+  "display_order_weight": -1.0,
+  "label_template": "${COUNT}",
+  "lock_behavior": "none",
+  "environment_variables": [],
+  "parameters": [],
+  "materials": [
+    {
+      "pipeline": "deploy_to_docker",
+      "stage": "run_container",
+      "ignore_for_scheduling": false,
+      "name": "deploy_pipeline",
+      "type": "dependency"
+    }
+  ],
+  "stages": [
+    {
+      "name": "test_app_pages",
+      "fetch_materials": true,
+      "never_cleanup_artifacts": false,
+      "clean_working_directory": false,
+      "approval": {
+        "type": "success",
+        "users": [],
+        "roles": [],
+        "allow_only_on_success": false
+      },
+      "environment_variables": [],
+      "jobs": [
+        {
+          "name": "test_page_1",
+          "environment_variables": [],
+          "tabs": [],
+          "resources": [],
+          "artifacts": [],
+          "timeout": 0.0,
+          "tasks": [
+            {
+              "command": "/bin/bash",
+              "timeout": -1.0,
+              "arguments": [
+                "-c",
+                "curl -v http://localhost:5001/"
+              ],
+              "run_if": "passed",
+              "type": "exec"
+            }
+          ]
+        },
+        {
+          "name": "test_page_2",
+          "environment_variables": [],
+          "tabs": [],
+          "resources": [],
+          "artifacts": [],
+          "timeout": 0.0,
+          "tasks": [
+            {
+              "command": "/bin/bash",
+              "timeout": -1.0,
+              "arguments": [
+                "-c",
+                "curl -v http://localhost:5001/hello/sherif"
+              ],
+              "run_if": "passed",
+              "type": "exec"
+            },
+            {
+              "command": "/bin/bash",
+              "timeout": -1.0,
+              "arguments": [
+                "-c",
+                "curl http://localhost:5001/hello/koki|grep koki"
+              ],
+              "run_if": "passed",
+              "type": "exec"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "get_test_scripts",
+      "fetch_materials": true,
+      "never_cleanup_artifacts": false,
+      "clean_working_directory": false,
+      "approval": {
+        "type": "success",
+        "users": [],
+        "roles": [],
+        "allow_only_on_success": false
+      },
+      "environment_variables": [],
+      "jobs": [
+        {
+          "name": "get_script1",
+          "environment_variables": [],
+          "tabs": [],
+          "resources": [],
+          "artifacts": [],
+          "timeout": 0.0,
+          "tasks": [
+            {
+              "command": "/bin/bash",
+              "timeout": -1.0,
+              "arguments": [
+                "-c",
+                "wget http://localhost:3000/gogs/pyhttpserver/raw/master/test/test1.sh -O test1.sh"
+              ],
+              "run_if": "passed",
+              "type": "exec"
+            }
+          ]
+        },
+        {
+          "name": "get_script2",
+          "environment_variables": [],
+          "tabs": [],
+          "resources": [],
+          "artifacts": [],
+          "timeout": 0.0,
+          "tasks": [
+            {
+              "command": "/bin/bash",
+              "timeout": -1.0,
+              "arguments": [
+                "-c",
+                "wget http://localhost:3000/gogs/pyhttpserver/raw/master/test/test2.sh -O test2.sh"
+              ],
+              "run_if": "passed",
+              "type": "exec"
+            }
+          ]
+        },
+        {
+          "name": "get_script3",
+          "environment_variables": [],
+          "tabs": [],
+          "resources": [],
+          "artifacts": [],
+          "timeout": 0.0,
+          "tasks": [
+            {
+              "command": "/bin/bash",
+              "timeout": -1.0,
+              "arguments": [
+                "-c",
+                "wget http://localhost:3000/gogs/pyhttpserver/raw/master/test/test3.sh -O test3.sh"
+              ],
+              "run_if": "passed",
+              "type": "exec"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "run_test_scripts",
+      "fetch_materials": true,
+      "never_cleanup_artifacts": false,
+      "clean_working_directory": false,
+      "approval": {
+        "type": "success",
+        "users": [],
+        "roles": [],
+        "allow_only_on_success": false
+      },
+      "environment_variables": [],
+      "jobs": [
+        {
+          "name": "run_test1",
+          "environment_variables": [],
+          "tabs": [],
+          "resources": [],
+          "artifacts": [],
+          "timeout": 0.0,
+          "tasks": [
+            {
+              "command": "/bin/bash",
+              "timeout": -1.0,
+              "arguments": [
+                "./test1.sh"
+              ],
+              "run_if": "passed",
+              "type": "exec"
+            }
+          ]
+        },
+        {
+          "name": "run_test2",
+          "environment_variables": [],
+          "tabs": [],
+          "resources": [],
+          "artifacts": [],
+          "timeout": 0.0,
+          "tasks": [
+            {
+              "command": "/bin/bash",
+              "timeout": -1.0,
+              "arguments": [
+                "./test2.sh"
+              ],
+              "run_if": "passed",
+              "type": "exec"
+            }
+          ]
+        },
+        {
+          "name": "run_test3",
+          "environment_variables": [],
+          "tabs": [],
+          "resources": [],
+          "artifacts": [],
+          "timeout": 0.0,
+          "tasks": [
+            {
+              "command": "/bin/bash",
+              "timeout": -1.0,
+              "arguments": [
+                "./test3.sh"
+              ],
+              "run_if": "passed",
+              "type": "exec"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

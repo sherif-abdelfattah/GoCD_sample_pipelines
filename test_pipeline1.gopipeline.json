@@ -1,0 +1,61 @@
+{
+  "group": "defaultGroup",
+  "name": "test_pipeline1",
+  "display_order_weight": -1.0,
+  "label_template": "${COUNT}",
+  "lock_behavior": "none",
+  "environment_variables": [],
+  "parameters": [],
+  "materials": [
+    {
+      "url": "http://gimly:3000/gogs/Test_pipeline1",
+      "branch": "master",
+      "shallow_clone": false,
+      "filter": {
+        "ignore": [],
+        "whitelist": []
+      },
+      "auto_update": true,
+      "type": "git"
+    }
+  ],
+  "stages": [
+    {
+      "name": "stage1",
+      "fetch_materials": true,
+      "never_cleanup_artifacts": false,
+      "clean_working_directory": false,
+      "approval": {
+        "type": "success",
+        "users": [],
+        "roles": [],
+        "allow_only_on_success": false
+      },
+      "environment_variables": [],
+      "jobs": [
+        {
+          "name": "job1",
+          "environment_variables": [],
+          "tabs": [],
+          "resources": [
+            "test_targets"
+          ],
+          "artifacts": [],
+          "run_instance_count": "all",
+          "timeout": 0.0,
+          "tasks": [
+            {
+              "command": "/usr/bin/bash",
+              "timeout": -1.0,
+              "arguments": [
+                "commit.task.script"
+              ],
+              "run_if": "passed",
+              "type": "exec"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
